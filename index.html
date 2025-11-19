@@ -1,34 +1,863 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Sorry</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impress Mr. Kitten 💗</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
         }
+
         .container {
-            padding: 30px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px #ccc;
-            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
         }
-        h1 {
-            color: #c0392b;
+
+        .title {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #ffecd2;
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+        }
+
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .task-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .task-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .task-card.completed {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border: 3px solid #4CAF50;
+        }
+
+        .task-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .task-title {
+            font-size: 1.5rem;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .task-description {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .complete-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .complete-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(118, 75, 162, 0.4);
+        }
+
+        .complete-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+            display: none;
+        }
+
+        .task-card.completed .checkmark {
+            display: block;
+        }
+
+        .progress-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 40px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A, #CDDC39);
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .code-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        .code-section.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .code-input {
+            width: 300px;
+            padding: 1rem;
+            font-size: 1.5rem;
+            text-align: center;
+            border: 3px solid #764ba2;
+            border-radius: 15px;
+            margin: 1rem auto;
+            display: block;
+            font-weight: bold;
+            letter-spacing: 5px;
+        }
+
+        .submit-code-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 25px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .submit-code-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(118, 75, 162, 0.4);
+        }
+
+        .spin-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .spin-section.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 2rem auto;
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 15px solid #764ba2;
+            position: relative;
+            transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .wheel-slice {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: 100% 100%;
+            overflow: hidden;
+        }
+
+        .wheel-slice-content {
+            width: 200%;
+            height: 200%;
+            transform-origin: 50% 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            padding: 20px;
+        }
+
+        .pointer {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            z-index: 10;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+        }
+
+        .spin-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            border: none;
+            padding: 1.5rem 3rem;
+            border-radius: 30px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            box-shadow: 0 5px 20px rgba(238, 90, 111, 0.4);
+        }
+
+        .spin-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(238, 90, 111, 0.6);
+        }
+
+        .spin-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .result-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            z-index: 2000;
+            max-width: 500px;
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .result-popup.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .result-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: celebration 0.6s ease-in-out;
+        }
+
+        @keyframes celebration {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-10deg); }
+            75% { transform: scale(1.2) rotate(10deg); }
+        }
+
+        .result-text {
+            font-size: 2rem;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .result-message {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .close-result-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .firework {
+            position: absolute;
+            font-size: 2rem;
+            animation: explode 1s ease-out;
+            opacity: 0;
+        }
+
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(3);
+            }
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .title {
+                font-size: 1.5rem;
+                padding: 0 1rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
+            .tasks-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .task-card {
+                padding: 1.5rem;
+            }
+
+            .task-icon {
+                font-size: 3rem;
+            }
+
+            .task-title {
+                font-size: 1.3rem;
+            }
+
+            .task-description {
+                font-size: 0.9rem;
+            }
+
+            .complete-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .progress-section {
+                padding: 1.5rem;
+            }
+
+            .progress-bar-container {
+                height: 35px;
+            }
+
+            .progress-bar {
+                font-size: 1rem;
+            }
+
+            .code-section {
+                padding: 1.5rem;
+            }
+
+            .code-section h2 {
+                font-size: 1.5rem !important;
+            }
+
+            .code-section p {
+                font-size: 1rem !important;
+            }
+
+            .code-input {
+                width: 90%;
+                max-width: 280px;
+                padding: 0.8rem;
+                font-size: 1.2rem;
+                letter-spacing: 3px;
+            }
+
+            .submit-code-btn {
+                padding: 0.8rem 2rem;
+                font-size: 1.1rem;
+            }
+
+            .wheel-container {
+                width: 280px;
+                height: 280px;
+            }
+
+            .wheel {
+                border-width: 10px;
+            }
+
+            .wheel-slice-content {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+
+            .pointer {
+                font-size: 2.5rem;
+                top: -25px;
+            }
+
+            .spin-section {
+                padding: 1.5rem;
+            }
+
+            .spin-section h2 {
+                font-size: 1.8rem !important;
+            }
+
+            .spin-section p {
+                font-size: 1.1rem !important;
+            }
+
+            .spin-btn {
+                padding: 1.2rem 2rem;
+                font-size: 1.2rem;
+                width: 90%;
+                max-width: 300px;
+            }
+
+            .result-popup {
+                padding: 2rem;
+                max-width: 90%;
+                width: 320px;
+            }
+
+            .result-icon {
+                font-size: 3.5rem;
+            }
+
+            .result-text {
+                font-size: 1.5rem;
+            }
+
+            .result-message {
+                font-size: 1.1rem;
+            }
+
+            .close-result-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .final-content h1 {
+                font-size: 2rem !important;
+            }
+
+            .final-content p {
+                font-size: 1.3rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.3rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .task-icon {
+                font-size: 2.5rem;
+            }
+
+            .task-title {
+                font-size: 1.1rem;
+            }
+
+            .wheel-container {
+                width: 240px;
+                height: 240px;
+            }
+
+            .wheel-slice-content {
+                font-size: 0.75rem;
+            }
+
+            .pointer {
+                font-size: 2rem;
+            }
+
+            .spin-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1.1rem;
+            }
+
+            .code-input {
+                font-size: 1rem;
+                padding: 0.7rem;
+            }
+
+            .result-popup {
+                padding: 1.5rem;
+            }
+
+            .result-icon {
+                font-size: 3rem;
+            }
+
+            .result-text {
+                font-size: 1.3rem;
+            }
+
+            .result-message {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .wheel-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .wheel-slice-content {
+                font-size: 0.65rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Sorry for everything.</h1>
-        <p>It's my mistake.</p>
+        <h1 class="title">🐱 Impress Mr. Kitten Challenge 💗</h1>
+        <p class="subtitle">Complete all tasks to unlock the secret code and win amazing prizes! 🎁</p>
+
+        <div class="progress-section">
+            <h2 style="color: #764ba2; margin-bottom: 1rem;">Your Progress 📊</h2>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar">0/7</div>
+            </div>
+            <p style="color: #666; font-size: 1.2rem;">Complete all tasks to get the secret code! 🔐</p>
+        </div>
+
+        <div class="tasks-grid">
+            <div class="task-card" data-task="hands">
+                <span class="checkmark">✅</span>
+                <div class="task-icon">🤲</div>
+                <div class="task-title">Give Hands</div>
+                <div class="task-description">Hold my hands and make me feel loved 💕</div>
+                <button class="complete-btn" onclick="completeTask('hands')">I Did This! 💗</button>
+            </div>
+
+            <div class="task-card" data-task="gesture">
+                <span class="checkmark">✅</span>
+                <div class="task-icon">🫶</div>
+                <div class="task-title">Special Gesture</div>
+                <div class="task-description">Show me our unique special gesture 💫</div>
+                <button class="complete-btn" onclick="completeTask('gesture')">I Did This! 💗</button>
+            </div>
+
+            <div class="task-card" data-task="pamper">
+                <span class="checkmark">✅</span>
+                <div class="task-icon">💆</div>
+                <div class="task-title">Pamper Me</div>
+                <div class="task-description">Give me some love and care 🥰</div>
+                <button class="complete-btn" onclick="completeTask('pamper')">I Did This! 💗</button>
+            </div>
+
+            <div class="task-card" data-task="argument">
+                <span class="checkmark">✅</span>
+                <div class="task-icon">😤</div>
+                <div class="task-title">Cute Argument</div>
+                <div class="task-description">Have a playful cute argument with me 😼</div>
+                <button class="complete-btn" onclick="completeTask('argument')">I Did This! 💗</button>
+            </div>
+
+            <div class="task-card" data-task="dance">
+                <span class="checkmark">✅</span>
+                <div class="task-icon">💃</div>
+                <div class="task-title">Dance For Me</div>
+                <div class="task-description">Show me your moves 🎶</div>
+                <button class="complete-btn" onclick="completeTask('dance')">I Did This! 💗</button>
+            </div>
+
+            <div class="task-card" data-task="sing">
+                <span class="checkmark">✅</span>
+                <div class="task-icon">🎤</div>
+                <div class="task-title">Sing For Me</div>
+                <div class="task-description">Bless me with your sweet voice 🎵</div>
+                <button class="complete-btn" onclick="completeTask('sing')">I Did This! 💗</button>
+            </div>
+
+            <div class="task-card" data-task="surprise">
+                <span class="checkmark">✅</span>
+                <div class="task-icon">🎁</div>
+                <div class="task-title">Surprise Me</div>
+                <div class="task-description">Do something special to wow me! ✨</div>
+                <button class="complete-btn" onclick="completeTask('surprise')">I Did This! 💗</button>
+            </div>
+        </div>
+
+        <div class="code-section" id="codeSection">
+            <h2 style="color: #764ba2; font-size: 2rem; margin-bottom: 1rem;">🎉 You Impressed Me! 🎉</h2>
+            <p style="color: #666; font-size: 1.3rem; margin-bottom: 1.5rem;">💝 Mr. Kitten is so proud of you! 💝</p>
+            <p style="color: #764ba2; font-size: 1.5rem; margin-bottom: 2rem; font-weight: bold;">Ask me for the secret code to unlock your prize! 🔐✨</p>
+            <input type="text" class="code-input" id="codeInput" placeholder="ENTER CODE" maxlength="10">
+            <br>
+            <button class="submit-code-btn" onclick="verifyCode()">Unlock Prize Wheel 🎁</button>
+            <p class="error-message" id="errorMessage">❌ Wrong code! Try again!</p>
+        </div>
+
+        <div class="spin-section" id="spinSection">
+            <h2 style="color: #764ba2; font-size: 2.5rem; margin-bottom: 1rem;">🎡 Prize Wheel 🎡</h2>
+            <p style="color: #666; font-size: 1.3rem; margin-bottom: 1rem;">Spin to win your special gift! 💝</p>
+            
+            <div class="wheel-container">
+                <div class="pointer">🔽</div>
+                <div class="wheel" id="wheel">
+                    <div class="wheel-slice" style="transform: rotate(0deg);">
+                        <div class="wheel-slice-content" style="background: #FF6B6B; transform: rotate(22.5deg);">🍛 Biryani</div>
+                    </div>
+                    <div class="wheel-slice" style="transform: rotate(45deg);">
+                        <div class="wheel-slice-content" style="background: #4ECDC4; transform: rotate(22.5deg);">🍫 Dairy Milk</div>
+                    </div>
+                    <div class="wheel-slice" style="transform: rotate(90deg);">
+                        <div class="wheel-slice-content" style="background: #95E1D3; transform: rotate(22.5deg);">🧁 Brownies</div>
+                    </div>
+                    <div class="wheel-slice" style="transform: rotate(135deg);">
+                        <div class="wheel-slice-content" style="background: #F38181; transform: rotate(22.5deg);">🍫 KitKat</div>
+                    </div>
+                    <div class="wheel-slice" style="transform: rotate(180deg);">
+                        <div class="wheel-slice-content" style="background: #AA96DA; transform: rotate(22.5deg);">🥚 Kinder Joy</div>
+                    </div>
+                    <div class="wheel-slice" style="transform: rotate(225deg);">
+                        <div class="wheel-slice-content" style="background: #FCBAD3; transform: rotate(22.5deg);">🎂 Cake</div>
+                    </div>
+                    <div class="wheel-slice" style="transform: rotate(270deg);">
+                        <div class="wheel-slice-content" style="background: #FFFFD2; transform: rotate(22.5deg); color: #764ba2;">🍬 Gems</div>
+                    </div>
+                    <div class="wheel-slice" style="transform: rotate(315deg);">
+                        <div class="wheel-slice-content" style="background: #A8D8EA; transform: rotate(22.5deg);">🍦 Ice Cream</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="spin-btn" id="spinBtn" onclick="spinWheel()">🎰 SPIN NOW! 🎰</button>
+        </div>
     </div>
+
+    <div class="result-popup" id="resultPopup">
+        <div class="result-icon" id="resultIcon"></div>
+        <div class="result-text" id="resultText"></div>
+        <div class="result-message" id="resultMessage"></div>
+        <button class="close-result-btn" onclick="closeResult()">Yay! Thank You! 💗</button>
+    </div>
+
+    <div class="fireworks" id="fireworks"></div>
+
+    <script>
+        const prizes = [
+            { name: 'Biryani', icon: '🍛', message: 'Get ready for a delicious biryani date! 🍛✨' },
+            { name: 'Dairy Milk', icon: '🍫', message: 'Sweet treats coming your way! 🍫💜' },
+            { name: 'Brownies', icon: '🧁', message: 'Homemade brownies made with love! 🧁🤎' },
+            { name: 'KitKat', icon: '🍫', message: 'Time for a KitKat break together! 🍫❤️' },
+            { name: 'Kinder Joy', icon: '🥚', message: 'Double surprise with Kinder Joy! 🥚🎁' },
+            { name: 'Cake', icon: '🎂', message: 'Celebration time with cake! 🎂🎉' },
+            { name: 'Gems', icon: '🍬', message: 'Colorful gems for my gem! 🍬💎' },
+            { name: 'Ice Cream', icon: '🍦', message: 'Ice cream date is on! 🍦😋' }
+        ];
+
+        let completedTasks = new Set();
+        let hasSpun = false;
+
+        function completeTask(taskName) {
+            if (!completedTasks.has(taskName)) {
+                completedTasks.add(taskName);
+                const card = document.querySelector(`[data-task="${taskName}"]`);
+                card.classList.add('completed');
+                card.querySelector('.complete-btn').disabled = true;
+                card.querySelector('.complete-btn').textContent = 'Completed! ✅';
+                
+                updateProgress();
+                
+                if (completedTasks.size === 7) {
+                    setTimeout(() => {
+                        document.getElementById('codeSection').classList.add('show');
+                        document.getElementById('codeSection').scrollIntoView({ behavior: 'smooth' });
+                        createFireworks();
+                    }, 500);
+                }
+            }
+        }
+
+        function updateProgress() {
+            const progress = (completedTasks.size / 7) * 100;
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = progress + '%';
+            progressBar.textContent = `${completedTasks.size}/7`;
+        }
+
+        function verifyCode() {
+            const input = document.getElementById('codeInput').value.toUpperCase();
+            const errorMsg = document.getElementById('errorMessage');
+            
+            if (input === 'KITTEN2024') {
+                // Hide all previous sections
+                document.querySelector('.tasks-grid').style.display = 'none';
+                document.querySelector('.progress-section').style.display = 'none';
+                document.getElementById('codeSection').style.display = 'none';
+                
+                // Show only spin section
+                document.getElementById('spinSection').classList.add('show');
+                document.getElementById('spinSection').scrollIntoView({ behavior: 'smooth' });
+                createFireworks();
+                errorMsg.classList.remove('show');
+            } else {
+                errorMsg.classList.add('show');
+            }
+        }
+
+        function spinWheel() {
+            if (hasSpun) return;
+            
+            hasSpun = true;
+            const spinBtn = document.getElementById('spinBtn');
+            spinBtn.disabled = true;
+            spinBtn.textContent = '🌀 SPINNING... 🌀';
+            
+            const wheel = document.getElementById('wheel');
+            const randomPrize = Math.floor(Math.random() * prizes.length);
+            const degreesPerPrize = 360 / prizes.length;
+            const extraSpins = 360 * 8;
+            const finalRotation = extraSpins + (randomPrize * degreesPerPrize) + (degreesPerPrize / 2);
+            
+            wheel.style.transform = `rotate(${finalRotation}deg)`;
+            
+            setTimeout(() => {
+                showResult(prizes[randomPrize]);
+                createFireworks();
+            }, 3000);
+        }
+
+        function showResult(prize) {
+            document.getElementById('resultIcon').textContent = prize.icon;
+            document.getElementById('resultText').textContent = `You Won: ${prize.name}!`;
+            document.getElementById('resultMessage').textContent = prize.message;
+            document.getElementById('resultPopup').classList.add('show');
+        }
+
+        function closeResult() {
+            document.getElementById('resultPopup').classList.remove('show');
+        }
+
+        function createFireworks() {
+            const container = document.getElementById('fireworks');
+            const emojis = ['💗', '💖', '💕', '✨', '🎉', '🎊', '⭐', '💝'];
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+                    firework.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    firework.style.left = Math.random() * 100 + '%';
+                    firework.style.top = Math.random() * 100 + '%';
+                    container.appendChild(firework);
+                    
+                    setTimeout(() => firework.remove(), 1000);
+                }, i * 100);
+            }
+        }
+
+        document.getElementById('codeInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                verifyCode();
+            }
+        });
+    </script>
 </body>
 </html>
