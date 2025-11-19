@@ -614,13 +614,13 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="title">🐱 Impress Mr. Kitten Challenge 💗</h1>
+        <h1 class="title">🐱 Kitten Challenge 💗</h1>
         <p class="subtitle">Complete all tasks to unlock the secret code and win amazing prizes! 🎁</p>
 
         <div class="progress-section">
             <h2 style="color: #764ba2; margin-bottom: 1rem;">Your Progress 📊</h2>
             <div class="progress-bar-container">
-                <div class="progress-bar" id="progressBar">0/7</div>
+                <div class="progress-bar" id="progressBar">0/4</div>
             </div>
             <p style="color: #666; font-size: 1.2rem;">Complete all tasks to get the secret code! 🔐</p>
         </div>
@@ -658,34 +658,12 @@
                 <button class="complete-btn" onclick="completeTask('argument')">I Did This! 💗</button>
             </div>
 
-            <div class="task-card" data-task="dance">
-                <span class="checkmark">✅</span>
-                <div class="task-icon">💃</div>
-                <div class="task-title">Dance For Me</div>
-                <div class="task-description">Show me your moves 🎶</div>
-                <button class="complete-btn" onclick="completeTask('dance')">I Did This! 💗</button>
-            </div>
-
-            <div class="task-card" data-task="sing">
-                <span class="checkmark">✅</span>
-                <div class="task-icon">🎤</div>
-                <div class="task-title">Sing For Me</div>
-                <div class="task-description">Bless me with your sweet voice 🎵</div>
-                <button class="complete-btn" onclick="completeTask('sing')">I Did This! 💗</button>
-            </div>
-
-            <div class="task-card" data-task="surprise">
-                <span class="checkmark">✅</span>
-                <div class="task-icon">🎁</div>
-                <div class="task-title">Surprise Me</div>
-                <div class="task-description">Do something special to wow me! ✨</div>
-                <button class="complete-btn" onclick="completeTask('surprise')">I Did This! 💗</button>
-            </div>
+            
         </div>
 
         <div class="code-section" id="codeSection">
             <h2 style="color: #764ba2; font-size: 2rem; margin-bottom: 1rem;">🎉 You Impressed Me! 🎉</h2>
-            <p style="color: #666; font-size: 1.3rem; margin-bottom: 1.5rem;">💝 Mr. Kitten is so proud of you! 💝</p>
+            <p style="color: #666; font-size: 1.3rem; margin-bottom: 1.5rem;">💝  Kitten is so proud of you! 💝</p>
             <p style="color: #764ba2; font-size: 1.5rem; margin-bottom: 2rem; font-weight: bold;">Ask me for the secret code to unlock your prize! 🔐✨</p>
             <input type="text" class="code-input" id="codeInput" placeholder="ENTER CODE" maxlength="10">
             <br>
@@ -742,14 +720,14 @@
 
     <script>
         const prizes = [
-            { name: 'Biryani', icon: '🍛', message: 'Get ready for a delicious biryani date! 🍛✨' },
+            { name: 'Biryani', icon: '🍛', message: 'Get ready for a delicious biryani ! 🍛✨' },
             { name: 'Dairy Milk', icon: '🍫', message: 'Sweet treats coming your way! 🍫💜' },
             { name: 'Brownies', icon: '🧁', message: 'Homemade brownies made with love! 🧁🤎' },
             { name: 'KitKat', icon: '🍫', message: 'Time for a KitKat break together! 🍫❤️' },
             { name: 'Kinder Joy', icon: '🥚', message: 'Double surprise with Kinder Joy! 🥚🎁' },
             { name: 'Cake', icon: '🎂', message: 'Celebration time with cake! 🎂🎉' },
             { name: 'Gems', icon: '🍬', message: 'Colorful gems for my gem! 🍬💎' },
-            { name: 'Ice Cream', icon: '🍦', message: 'Ice cream date is on! 🍦😋' }
+            { name: 'Ice Cream', icon: '🍦', message: 'Ice cream  is on! 🍦😋' }
         ];
 
         let completedTasks = new Set();
@@ -765,7 +743,7 @@
                 
                 updateProgress();
                 
-                if (completedTasks.size === 7) {
+                if (completedTasks.size === 4) {
                     setTimeout(() => {
                         document.getElementById('codeSection').classList.add('show');
                         document.getElementById('codeSection').scrollIntoView({ behavior: 'smooth' });
@@ -776,10 +754,10 @@
         }
 
         function updateProgress() {
-            const progress = (completedTasks.size / 7) * 100;
+            const progress = (completedTasks.size / 4) * 100;
             const progressBar = document.getElementById('progressBar');
             progressBar.style.width = progress + '%';
-            progressBar.textContent = `${completedTasks.size}/7`;
+            progressBar.textContent = `${completedTasks.size}/4`;
         }
 
         function verifyCode() {
