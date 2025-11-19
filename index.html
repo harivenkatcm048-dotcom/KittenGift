@@ -396,15 +396,218 @@
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
             .title {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
+                padding: 0 1rem;
             }
-            .wheel-container {
-                width: 300px;
-                height: 300px;
+
+            .subtitle {
+                font-size: 1rem;
+                padding: 0 1rem;
             }
+
             .tasks-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .task-card {
+                padding: 1.5rem;
+            }
+
+            .task-icon {
+                font-size: 3rem;
+            }
+
+            .task-title {
+                font-size: 1.3rem;
+            }
+
+            .task-description {
+                font-size: 0.9rem;
+            }
+
+            .complete-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .progress-section {
+                padding: 1.5rem;
+            }
+
+            .progress-bar-container {
+                height: 35px;
+            }
+
+            .progress-bar {
+                font-size: 1rem;
+            }
+
+            .code-section {
+                padding: 1.5rem;
+            }
+
+            .code-section h2 {
+                font-size: 1.5rem !important;
+            }
+
+            .code-section p {
+                font-size: 1rem !important;
+            }
+
+            .code-input {
+                width: 90%;
+                max-width: 280px;
+                padding: 0.8rem;
+                font-size: 1.2rem;
+                letter-spacing: 3px;
+            }
+
+            .submit-code-btn {
+                padding: 0.8rem 2rem;
+                font-size: 1.1rem;
+            }
+
+            .wheel-container {
+                width: 280px;
+                height: 280px;
+            }
+
+            .wheel {
+                border-width: 10px;
+            }
+
+            .wheel-slice-content {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+
+            .pointer {
+                font-size: 2.5rem;
+                top: -25px;
+            }
+
+            .spin-section {
+                padding: 1.5rem;
+            }
+
+            .spin-section h2 {
+                font-size: 1.8rem !important;
+            }
+
+            .spin-section p {
+                font-size: 1.1rem !important;
+            }
+
+            .spin-btn {
+                padding: 1.2rem 2rem;
+                font-size: 1.2rem;
+                width: 90%;
+                max-width: 300px;
+            }
+
+            .result-popup {
+                padding: 2rem;
+                max-width: 90%;
+                width: 320px;
+            }
+
+            .result-icon {
+                font-size: 3.5rem;
+            }
+
+            .result-text {
+                font-size: 1.5rem;
+            }
+
+            .result-message {
+                font-size: 1.1rem;
+            }
+
+            .close-result-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .final-content h1 {
+                font-size: 2rem !important;
+            }
+
+            .final-content p {
+                font-size: 1.3rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.3rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .task-icon {
+                font-size: 2.5rem;
+            }
+
+            .task-title {
+                font-size: 1.1rem;
+            }
+
+            .wheel-container {
+                width: 240px;
+                height: 240px;
+            }
+
+            .wheel-slice-content {
+                font-size: 0.75rem;
+            }
+
+            .pointer {
+                font-size: 2rem;
+            }
+
+            .spin-btn {
+                padding: 1rem 1.5rem;
+                font-size: 1.1rem;
+            }
+
+            .code-input {
+                font-size: 1rem;
+                padding: 0.7rem;
+            }
+
+            .result-popup {
+                padding: 1.5rem;
+            }
+
+            .result-icon {
+                font-size: 3rem;
+            }
+
+            .result-text {
+                font-size: 1.3rem;
+            }
+
+            .result-message {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .wheel-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .wheel-slice-content {
+                font-size: 0.65rem;
             }
         }
     </style>
@@ -417,7 +620,7 @@
         <div class="progress-section">
             <h2 style="color: #764ba2; margin-bottom: 1rem;">Your Progress 📊</h2>
             <div class="progress-bar-container">
-                <div class="progress-bar" id="progressBar">   0/7</div>
+                <div class="progress-bar" id="progressBar">0/7</div>
             </div>
             <p style="color: #666; font-size: 1.2rem;">Complete all tasks to get the secret code! 🔐</p>
         </div>
@@ -427,15 +630,15 @@
                 <span class="checkmark">✅</span>
                 <div class="task-icon">🤲</div>
                 <div class="task-title">Give Hands</div>
-                <div class="task-description">Hold my hands and make me feel Special 💕</div>
+                <div class="task-description">Hold my hands and make me feel loved 💕</div>
                 <button class="complete-btn" onclick="completeTask('hands')">I Did This! 💗</button>
             </div>
 
             <div class="task-card" data-task="gesture">
                 <span class="checkmark">✅</span>
-                <div class="task-icon">💞</div>
+                <div class="task-icon">🫶</div>
                 <div class="task-title">Special Gesture</div>
-                <div class="task-description">Show me our unique special gestureS 💫</div>
+                <div class="task-description">Show me our unique special gesture 💫</div>
                 <button class="complete-btn" onclick="completeTask('gesture')">I Did This! 💗</button>
             </div>
 
@@ -459,7 +662,7 @@
                 <span class="checkmark">✅</span>
                 <div class="task-icon">💃</div>
                 <div class="task-title">Dance For Me</div>
-                <div class="task-description">Show me your moves 🎶</div>
+                <div class="task-description">Show me your moves, baby! 🎶</div>
                 <button class="complete-btn" onclick="completeTask('dance')">I Did This! 💗</button>
             </div>
 
@@ -539,7 +742,7 @@
 
     <script>
         const prizes = [
-            { name: 'Biryani', icon: '🍛', message: 'Get ready for a delicious biryani !🍛✨' },
+            { name: 'Biryani', icon: '🍛', message: 'Get ready for a delicious biryani date! 🍛✨' },
             { name: 'Dairy Milk', icon: '🍫', message: 'Sweet treats coming your way! 🍫💜' },
             { name: 'Brownies', icon: '🧁', message: 'Homemade brownies made with love! 🧁🤎' },
             { name: 'KitKat', icon: '🍫', message: 'Time for a KitKat break together! 🍫❤️' },
